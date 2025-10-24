@@ -169,3 +169,35 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.9rem;
     color: #adb5bd;
 }
+
+/* --- Carousel Customization --- */
+.carousel-item {
+    height: 500px; /* Or any other fixed height */
+}
+
+.carousel-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This will crop the images to fit the container */
+    object-position: center;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    width: 5%;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 20px;
+}
+
+@media (max-width: 767.98px) {
+    .navbar-brand {
+        font-size: 1.2rem; /* Reduce font size on small screens */
+    }
+}
+
