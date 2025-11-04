@@ -1,6 +1,5 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'phpmailer/Exception.php';
@@ -8,47 +7,57 @@ require 'phpmailer/PHPMailer.php';
 require 'phpmailer/SMTP.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = strip_tags(trim($_POST["name"]));
-    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
-    $subject = strip_tags(trim($_POST["subject"]));
-    $message = trim($_POST["message"]);
-
-    if (empty($name) || empty($email) || empty($subject) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        http_response_code(400);
-        echo "Please fill out all fields and provide a valid email address.";
-        exit;
-    }
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $subject = htmlspecialchars($_POST['subject']);
+    $message = htmlspecialchars($_POST['message']);
 
     $mail = new PHPMailer(true);
 
     try {
         //Server settings
         $mail->isSMTP();
-        $mail->Host       = 'smtp.example.com';  // TODO: Set the SMTP server to send through
+        $mail->Host       = 'smtp.gmail.com'; // Set the SMTP server to send through
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'user@example.com';  // TODO: SMTP username
-        $mail->Password   = 'secret';          // TODO: SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail_port = 587;
+        $mail->Username   = 'adijagtap1112@gmail.com'; // SMTP username
+        $mail->Password   = 'shqn cirq ggju szqf';           // SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = 465;
 
         //Recipients
-        $mail->setFrom($email, $name);
-        $mail->addAddress('aditya.jagtap@indionetworks.com', 'Aditya Jagtap'); // Add a recipient
+        $mail->setFrom('adijagtap1112@gmail.com', 'Contact Form');
+        $mail->addAddress('adijagtap1112@gmail.com', 'Mandlik Pile Foundation'); // Add a recipient
+        $mail->addReplyTo($email, $name);
 
         // Content
-        $mail->isHTML(false);
-        $mail->Subject = "New contact from $name: $subject";
-        $mail->Body    = "Name: $name\nEmail: $email\n\nMessage:\n$message";
+        $mail->isHTML(true);
+        $mail->Subject = 'New Contact Form Submission: ' . $subject;
+        $mail->Body    = "You have received a new message from your website contact form.<br><br>".
+                         "Here are the details:<br>".
+                         "<b>Name:</b> {$name}<br>".
+                         "<b>Email:</b> {$email}<br>".
+                         "<b>Subject:</b> {$subject}<br>".
+                         "<b>Message:</b><br>{$message}";
+        $mail->AltBody = "You have received a new message from your website contact form.\n\n".
+                         "Here are the details:\n".
+                         "Name: {$name}\n".
+                         "Email: {$email}\n".
+                         "Subject: {$subject}\n".
+                         "Message:\n{$message}";
 
         $mail->send();
-        header("Location: thank-you.html");
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo "Oops! Something went wrong and we couldn't send your message. Mailer Error: ". $mail->ErrorInfo;
-    }
+        
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'success']);
+        exit;
 
+    } catch (Exception $e) {
+        header('Content-Type: application/json');
+        http_response_code(500); // Internal Server Error
+        echo json_encode(['status' => 'error', 'message' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"]);
+        exit;
+    }
 } else {
-    http_response_code(403);
-    echo "There was a problem with your submission, please try again.";
+    echo "Invalid request method.";
 }
 ?>
