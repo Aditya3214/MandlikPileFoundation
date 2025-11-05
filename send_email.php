@@ -1,7 +1,11 @@
 <?php
+require 'vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
 require 'phpmailer/Exception.php';
 require 'phpmailer/PHPMailer.php';
 require 'phpmailer/SMTP.php';
@@ -17,12 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         //Server settings
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com'; // Set the SMTP server to send through
+        $mail->Host       = $_ENV['SMTP_HOST']; // Set the SMTP server to send through
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'pramodmandlik2014@gmail.com'; // SMTP username
-        $mail->Password   = 'tfmq llxh yufp hrrz';           // SMTP password
+        $mail->Username   = $_ENV['SMTP_USERNAME']; // SMTP username
+        $mail->Password   = $_ENV['SMTP_PASSWORD'];           // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port       = $_ENV['SMTP_PORT'];
         $mail->SMTPAutoTLS = false; 
         $mail->SMTPOptions = [
             'ssl' => [
@@ -36,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
 
         //Recipients
-        $mail->setFrom('pramodmandlik2014@gmail.com', 'Contact Form');
-        $mail->addAddress('pramodmandlik2014@gmail.com', 'Mandlik Pile Foundation'); // Add a recipient
+        $mail->setFrom($_ENV['SMTP_USERNAME'], 'Contact Form');
+        $mail->addAddress($_ENV['RECIPIENT_EMAIL'], 'Mandlik Pile Foundation'); // Add a recipient
         $mail->addReplyTo($email, $name);
 
         // Content
