@@ -11,8 +11,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com'; // Set the SMTP server to send through
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'adijagtap1112@gmail.com'; // SMTP username
-    $mail->Password   = 'shqn cirq ggju szqf';           // SMTP password
+    $mail->Username   = 'pramodmandlik2014@gmail.com'; // SMTP username
+    $mail->Password   = 'tfmq llxh yufp hrrz';           // SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
     $mail->SMTPAutoTLS = false; 
@@ -27,8 +27,8 @@ try {
 	    ],
     ];
     //Recipients
-    $mail->setFrom('adijagtap1112@gmail.com', 'Mailer');
-    $mail->addAddress('adijagtap1112@gmail.com', 'Aditya Jagtap'); // Add a recipient
+    $mail->setFrom('pramodmandlik2014@gmail.com', 'Mailer');
+    $mail->addAddress('pramodmandlik2014@gmail.com', 'Pramod Mandlik'); // Add a recipient
 
     // Content
     $mail->isHTML(true);

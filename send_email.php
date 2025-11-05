@@ -19,8 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com'; // Set the SMTP server to send through
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'adijagtap1112@gmail.com'; // SMTP username
-        $mail->Password   = 'shqn cirq ggju szqf';           // SMTP password
+        $mail->Username   = 'pramodmandlik2014@gmail.com'; // SMTP username
+        $mail->Password   = 'tfmq llxh yufp hrrz';           // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         $mail->SMTPAutoTLS = false; 
@@ -36,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ];
 
         //Recipients
-        $mail->setFrom('adijagtap1112@gmail.com', 'Contact Form');
-        $mail->addAddress('adijagtap1112@gmail.com', 'Mandlik Pile Foundation'); // Add a recipient
+        $mail->setFrom('pramodmandlik2014@gmail.com', 'Contact Form');
+        $mail->addAddress('pramodmandlik2014@gmail.com', 'Mandlik Pile Foundation'); // Add a recipient
         $mail->addReplyTo($email, $name);
 
         // Content
