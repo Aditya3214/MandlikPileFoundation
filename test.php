@@ -13,9 +13,19 @@ try {
     $mail->SMTPAuth   = true;
     $mail->Username   = 'adijagtap1112@gmail.com'; // SMTP username
     $mail->Password   = 'shqn cirq ggju szqf';           // SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port       = 465;
-
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+    $mail->SMTPAutoTLS = false; 
+    $mail->SMTPOptions = [
+	    'ssl' => [
+		    'verify_peer' => false,
+		    'verify_peer_name' => false,
+		    'allow_self_signed' => true
+	    ],
+	    'socket' => [
+		    'bindto' => '0.0.0.0:0', // This forces IPv4 binding
+	    ],
+    ];
     //Recipients
     $mail->setFrom('adijagtap1112@gmail.com', 'Mailer');
     $mail->addAddress('adijagtap1112@gmail.com', 'Aditya Jagtap'); // Add a recipient
@@ -32,3 +42,4 @@ try {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 ?>
+
